@@ -57,9 +57,9 @@ func writeError(w http.ResponseWriter, code int) {
 
 func Setup() (srv http.Server, err error) {
 	keys := []string{
-		"WEBAPP_PORT", "WEBAPP_DB_HOST",
-		"WEBAPP_DB_PORT", "WEBAPP_DB_NAME",
-		"WEBAPP_DB_USERNAME", "WEBAPP_DB_PASSWORD",
+		"WEBAPP_SERVICE_PORT", "WEBDB_SERVICE_HOST",
+		"WEBDB_SERVICE_PORT", "WEBDB_SERVICE_NAME",
+		"WEBDB_SERVICE_USERNAME", "WEBDB_SERVICE_PASSWORD",
 	}
 	h := &handler{
 		stdlog: log.New(os.Stdout, "[WEBAPP:INFO]: ", log.LstdFlags),
@@ -75,13 +75,13 @@ func Setup() (srv http.Server, err error) {
 		h.env[key] = value
 	}
 	h.DB, err = datastore.New(
-		h.env["WEBAPP_DB_USERNAME"] +
-			":" + h.env["WEBAPP_DB_PASSWORD"] +
-			"@tcp(" + h.env["WEBAPP_DB_HOST"] +
-			":" + h.env["WEBAPP_DB_PORT"] +
-			")/" + h.env["WEBAPP_DB_NAME"],
+		h.env["WEBDB_SERVICE_USERNAME"] +
+			":" + h.env["WEBDB_SERVICE_PASSWORD"] +
+			"@tcp(" + h.env["WEBDB_SERVICE_HOST"] +
+			":" + h.env["WEBDB_SERVICE_PORT"] +
+			")/" + h.env["WEBDB_SERVICE_NAME"],
 	)
-	srv.Addr = ":" + h.env["WEBAPP_PORT"]
+	srv.Addr = ":" + h.env["WEBAPP_SERVICE_PORT"]
 	srv.Handler = h
 	return
 }
