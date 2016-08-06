@@ -1,4 +1,4 @@
 Kubernetes Demo
 ===============
 
-Automate scripts for demonstrate the Kubernetes features.
+Automated scripts to demonstrate the features of the Kubernetes.
