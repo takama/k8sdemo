@@ -15,7 +15,7 @@ DB_PASSWORD=$7
 
 if [ "$VERSION" = "" ]; then
     echo "Usage: run.sh <version> <app-port> <db-host> <db-port> <db-name> <db-username> <db-password>"
-    echo "example: run.sh 0.1 3000 0.0.0.0 webdemo webdemo webdemo!"
+    echo "example: run.sh 0.1 3000 172.17.0.1 3306 webdemo webdemo webdemo!"
     exit
 fi
 
@@ -24,7 +24,7 @@ if [ "$APP_PORT" = "" ]; then
 fi
 
 if [ "$DB_HOST" = "" ]; then
-	DB_HOST='0.0.0.0'
+	DB_HOST='172.17.0.1'
 fi
 
 if [ "$DB_PORT" = "" ]; then
