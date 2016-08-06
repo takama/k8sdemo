@@ -1,0 +1,51 @@
+{
+  "kind": "Pod",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "kube-controller-manager"
+  },
+  "spec": {
+    "hostNetwork": true,
+    "containers": [
+      {
+        "name": "kube-controller-manager",
+        "image": "rhel7/kubernetes-controller-mgr",
+        "volumeMounts": [
+          {
+            "name": "etcssl",
+            "mountPath": "/etc/ssl",
+            "readOnly": true
+          },
+          {
+            "name": "config",
+            "mountPath": "/etc/kubernetes",
+            "readOnly": true
+          }
+        ],
+        "livenessProbe": {
+          "httpGet": {
+            "path": "/healthz",
+            "port": 10252
+          },
+          "initialDelaySeconds": 15,
+          "timeoutSeconds": 15
+        }
+      }
+    ],
+    "volumes": [
+      {
+        "name": "etcssl",
+        "hostPath": {
+          "path": "/etc/ssl"
+        }
+      },
+      {
+        "name": "config",
+        "hostPath": {
+          "path": "/etc/kubernetes"
+        }
+      }
+    ]
+  }
+}
+
