@@ -1,0 +1,40 @@
+---
+- name: Setup firewall ports
+  firewalld:
+    zone: trusted
+    port: "{{ item }}"
+    state: enabled
+    permanent: true
+  with_items:
+    - 2379-2380/tcp
+  notify:
+    - reload firewall
+
+- name: Setup firewall sources
+  firewalld:
+    zone: trusted
+    source: "{{ item }}"
+    state: enabled
+    permanent: true
+  with_items:
+    - '{{ master_ipv4 }}'
+    - '{{ master_ipv6 }}'
+    - '{{ nodes_ipv4 }}'
+    - '{{ nodes_ipv6 }}'
+  notify:
+    - reload firewall
+  when: master_ipv4 is defined and master_ipv6 is defined and nodes_ipv4 is defined and nodes_ipv6 is defined
+
+- name: Check datastore prepare directory
+  file:
+    path: '{{ cluster_configs }}'
+    state: directory
+    mode: 0755
+
+- name: Register flannel network and subnet
+  template:
+    src: flannel-config.json.j2
+    dest: '{{ cluster_configs }}/flannel-config.json'
+    mode: 0644
+  notify:
+    - store flannel settings

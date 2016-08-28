@@ -1,0 +1,61 @@
+---
+- name: Setup firewall ports
+  firewalld:
+    zone: trusted
+    port: "{{ item }}"
+    state: enabled
+    permanent: true
+  with_items:
+    - 8472/udp
+    - 10250/tcp
+  notify:
+    - reload firewall
+
+- name: Setup firewall sources
+  firewalld:
+    zone: trusted
+    source: "{{ item }}"
+    state: enabled
+    permanent: true
+  with_items:
+    - '{{ master_ipv4 }}'
+    - '{{ master_ipv6 }}'
+    - '{{ nodes_ipv4 }}'
+    - '{{ nodes_ipv6 }}'
+  notify:
+    - reload firewall
+
+- name: Install Kubernets Node
+  yum:
+    name: kubernetes-node
+    state: present
+
+- name: Enable Kubernetes services
+  service:
+    name: "{{ item }}"
+    enabled: yes
+  with_items:
+    - kubelet
+    - kube-proxy
+
+- name: Check kubernetes configs directory
+  file:
+    path: '{{ k8s_node_config }}'
+    state: directory
+    mode: 0755
+
+- name: Setup Kubernetes service
+  template:
+    src: config.j2
+    dest: '{{ k8s_node_config }}/config'
+    mode: 0644
+  notify:
+    - restart kube-proxy/kubelet
+
+- name: Setup Kubelet service
+  template:
+    src: kubelet.j2
+    dest: '{{ k8s_node_config }}/kubelet'
+    mode: 0644
+  notify:
+    - restart kube-proxy/kubelet

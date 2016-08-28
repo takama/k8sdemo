@@ -1,0 +1,21 @@
+---
+- name: Install docker and dependecies
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - docker
+    - python-docker-py
+
+- name: Enable docker
+  service:
+    name: docker
+    enabled: yes
+
+- name: Setup docker
+  template:
+    src: docker-network.j2
+    dest: '/etc/sysconfig/docker-network'
+    mode: 0644
+  notify:
+    - restart docker

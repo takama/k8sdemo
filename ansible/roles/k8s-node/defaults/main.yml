@@ -1,0 +1,10 @@
+---
+master_ipv4: []
+master_ipv6: []
+nodes_ipv4: []
+nodes_ipv6: []
+datastore_host: 0.0.0.0
+datastore_port: 2379
+master_host: 0.0.0.0
+master_port: 8080
+k8s_node_config: '/etc/kubernetes'

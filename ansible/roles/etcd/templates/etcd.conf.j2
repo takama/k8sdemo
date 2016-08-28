@@ -1,0 +1,4 @@
+ETCD_NAME={{ etcd_name }}
+ETCD_DATA_DIR="/var/lib/etcd/{{ etcd_name }}.etcd"
+ETCD_LISTEN_CLIENT_URLS="http://{{ etcd_host }}:{{ etcd_port }}"
+ETCD_ADVERTISE_CLIENT_URLS="http://{{ etcd_host }}:{{ etcd_port }}"

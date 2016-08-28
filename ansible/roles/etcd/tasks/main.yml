@@ -1,0 +1,19 @@
+---
+- name: Install etcd
+  yum:
+    name: etcd
+    state: present
+
+- name: Enable etcd
+  service:
+    name: etcd
+    enabled: yes
+
+- name: Setup etcd
+  template:
+    src: etcd.conf.j2
+    dest: '/etc/etcd/etcd.conf'
+    mode: 0644
+  notify:
+    - reload systemd
+    - restart etcd

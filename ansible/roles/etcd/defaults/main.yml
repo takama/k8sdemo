@@ -1,0 +1,4 @@
+---
+etcd_name: default
+etcd_host: 0.0.0.0
+etcd_port: 2379
