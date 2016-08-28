@@ -1,7 +1,7 @@
 Kubernetes: master service
 ==========================
 
-This role setup Kubernetes on master node (API server, Controller Manager, Scheduller).
+This role setup Kubernetes service on master node: API server, Controller manager, Scheduler.
 
 Requirements
 ------------
@@ -18,25 +18,25 @@ Available variables are listed below, along with default values (see `defaults/m
 
 IP addresses of the nodes
 
-	datastore_host: 0.0.0.0
-	datastore_port: 2379
+	datastore_host: [ 0.0.0.0 | any host ]
+	datastore_port: [ 2379 | any post ]
 
 Datastore host and port
 
-	k8s_master_service_cluster_ip: '10.254.0.0/16'
+	k8s_master_service_cluster_ip: [ 10.254.0.0/16 | any subnet ]
 
-Cluster subnet
+Kubernets cluster subnet
 
-	k8s_master_config: '/etc/kubernetes'
+	k8s_master_config: [ /etc/kubernetes | any path ]
 
-Kubernetes config path
+Kubernetes configs path
 
-	k8s_master_pod_infra_image: 'registry.access.redhat.com/rhel7/pod-infrastructure'
-	k8s_master_api_server_image: 'registry.access.redhat.com/rhel7/kubernetes-apiserver'
-	k8s_master_controller_mgr_image: 'registry.access.redhat.com/rhel7/kubernetes-controller-mgr'
-	k8s_master_scheduler_image: 'registry.access.redhat.com/rhel7/kubernetes-scheduler'
+	k8s_master_pod_infra_image: [ docker image ]
+	k8s_master_api_server_image: [ docker image ]
+	k8s_master_controller_mgr_image: [ docker image ]
+	k8s_master_scheduler_image: [ docker image ]
 
-Kubernetes services images (Infrastructure, API server, Controller Manager, Scheduller).
+Infrastructure, API server, Controller manager, Scheduler docker images
 
 Dependencies
 ------------

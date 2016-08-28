@@ -1,51 +1,46 @@
-Kubernetes: master node
-=======================
+Kubernetes cluster ansible playbook
+===================================
 
-This role setup Kubernetes service on master node: API server, Controller manager, Scheduler.
+This playbook and set of roles set up a Kubernetes cluster onto machines. They can be real hardware, VMs, things in a public cloud, etc. Anything that you can connect to via SSH.
 
 Requirements
 ------------
 
-A node with preinstalled CentOS 7 or later / RHEL 7 or later.
+Hosts with preinstalled CentOS 7 or later / RHEL 7 or later.
 
-Role Variables
---------------
+Before starting
+---------------
 
-Available variables are listed below, along with default values (see `defaults/main.yml`):
+* Record the hostname of which machine you want to be your master (only support a single master)
+* Record the hostname of the machine you want to be your datastore/etcd server (often same as master, only one)
+* Record the hostname of the machines you want to be your nodes. (the master can also be a node)
+* Make sure your ansible running machine has ansible 2.1.
 
-	k8s_master_service_cluster_ip: [ 10.254.0.0/16 | any subnet]
+Configure inventory
+-------------------
 
-Kubernets cluster subnet
+Add the system information gathered above into a file called `inventory/cluster`,
+or create a new one for the cluster.
 
-	k8s_master_etcd_host: [ 0.0.0.0 | any host ]
-	k8s_master_etcd_port: [ 2379 | any post ]
+For example:
 
-Datastore host and port.
+```sh
+[master]
+k8s-master.your-domain
 
-	k8s_master_config: [ /etc/kubernetes | any path ]
+[node]
+k8s-node-01.your-domain
+k8s-node-02.your-domain
 
-Kubernetes configs path
+[datastore:children]
+master
+```
 
-	k8s_master_pod_infra_image: [ docker image ]
-	k8s_master_api_server_image: [ docker image ]
-	k8s_master_controller_mgr_image: [ docker image ]
-	k8s_master_scheduler_image: [ docker image ]
+Running the playbook
+--------------------
 
-Infrastructure, API server, Controller manager, Scheduler docker images
+After going through the setup, run the playbook `ansible-playbook playbooks/cluster/setup.yml` from within the `ansible` directory:
 
-Dependencies
-------------
-
-None.
-
-Example Playbook
-----------------
-
-Install datastore:
-
-    - hosts: master
-      roles:
-         - { role: k8s-master, tags: k8s-master }
 
 License
 -------
