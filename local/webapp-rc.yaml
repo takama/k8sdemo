@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: go-frontend
-          image: "webapp:0.1"
+          image: "takama/webapp:0.1"
           ports:
             - containerPort: 3000
 
