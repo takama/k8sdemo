@@ -1,0 +1,21 @@
+---
+- name: Install flannel
+  yum:
+    name: flannel
+    state: present
+
+- name: Enable flannel
+  service:
+    name: flanneld
+    enabled: yes
+
+- name: Setup flannel
+  template:
+    src: flanneld.j2
+    dest: '/etc/sysconfig/flanneld'
+    mode: 0644
+  notify:
+    - stop docker
+    - delete docker interface
+    - restart flanneld
+    - start docker

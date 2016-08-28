@@ -1,0 +1,11 @@
+---
+- name: restart kube-proxy/kubelet
+  service:
+    name: "{{ item }}"
+    state: restarted
+  with_items:
+    - kube-proxy
+    - kubelet
+
+- name: reload firewall
+  command: firewall-cmd --reload

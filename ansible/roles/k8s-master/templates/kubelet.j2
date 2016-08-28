@@ -1,0 +1,20 @@
+###
+# kubernetes kubelet (node) config
+
+# The address for the info server to serve on (set to 0.0.0.0 or "" for all interfaces)
+KUBELET_ADDRESS="--address=0.0.0.0"
+
+# The port for the info server to serve on
+# KUBELET_PORT="--port=10250"
+
+# You may leave this blank to use the actual hostname
+KUBELET_HOSTNAME="--hostname-override={{ inventory_hostname }}"
+
+# location of the api-server
+KUBELET_API_SERVER="--api_servers=http://{{ inventory_hostname }}:8080"
+
+# Add your own!
+KUBELET_ARGS="--register-node=true --config={{ k8s_master_config }}/manifests"
+
+# Infrastructure pod image
+KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image={{ k8s_master_pod_infra_image }}"

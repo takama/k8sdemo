@@ -1,0 +1,11 @@
+---
+nodes_ipv4: []
+nodes_ipv6: []
+datastore_host: 0.0.0.0
+datastore_port: 2379
+k8s_master_service_cluster_ip: '10.254.0.0/16'
+k8s_master_config: '/etc/kubernetes'
+k8s_master_pod_infra_image: 'registry.access.redhat.com/rhel7/pod-infrastructure'
+k8s_master_api_server_image: 'registry.access.redhat.com/rhel7/kubernetes-apiserver'
+k8s_master_controller_mgr_image: 'registry.access.redhat.com/rhel7/kubernetes-controller-mgr'
+k8s_master_scheduler_image: 'registry.access.redhat.com/rhel7/kubernetes-scheduler'

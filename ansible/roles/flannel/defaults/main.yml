@@ -1,0 +1,5 @@
+---
+datastore_host: 0.0.0.0
+datastore_port: 2379
+flannel_etcd_key: coreos.com/network
+flannel_options: ""

@@ -1,0 +1,15 @@
+---
+- name: stop docker
+  service:
+    name: docker
+    state: stopped
+- name: delete docker interface
+  command: ip link delete docker0
+- name: restart flanneld
+  service:
+    name: flanneld
+    state: restarted
+- name: start docker
+  service:
+    name: docker
+    state: started

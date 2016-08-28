@@ -1,0 +1,9 @@
+[master]
+k8s-master.your-domain
+
+[node]
+k8s-node-01.your-domain
+k8s-node-02.your-domain
+
+[datastore:children]
+master

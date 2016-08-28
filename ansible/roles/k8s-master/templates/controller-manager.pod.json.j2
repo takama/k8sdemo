@@ -1,0 +1,50 @@
+{
+  "kind": "Pod",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "kube-controller-manager"
+  },
+  "spec": {
+    "hostNetwork": true,
+    "containers": [
+      {
+        "name": "kube-controller-manager",
+        "image": "{{ k8s_master_controller_mgr_image }}",
+        "volumeMounts": [
+          {
+            "name": "etcssl",
+            "mountPath": "/etc/ssl",
+            "readOnly": true
+          },
+          {
+            "name": "config",
+            "mountPath": "{{ k8s_master_config }}",
+            "readOnly": true
+          }
+        ],
+        "livenessProbe": {
+          "httpGet": {
+            "path": "/healthz",
+            "port": 10252
+          },
+          "initialDelaySeconds": 15,
+          "timeoutSeconds": 15
+        }
+      }
+    ],
+    "volumes": [
+      {
+        "name": "etcssl",
+        "hostPath": {
+          "path": "/etc/ssl"
+        }
+      },
+      {
+        "name": "config",
+        "hostPath": {
+          "path": "{{ k8s_master_config }}"
+        }
+      }
+    ]
+  }
+}

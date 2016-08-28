@@ -1,0 +1,9 @@
+---
+master_ipv4: []
+master_ipv6: []
+nodes_ipv4: []
+nodes_ipv6: []
+cluster_configs: /var/datastore
+flannel_store_key: coreos.com/network/config
+flannel_network: 10.20.0.0/16
+flannel_subnet: 24

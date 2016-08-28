@@ -1,0 +1,6 @@
+---
+- name: store flannel settings
+  shell: etcdctl set {{ flannel_store_key }} < {{ cluster_configs }}/flannel-config.json
+
+- name: reload firewall
+  command: firewall-cmd --reload

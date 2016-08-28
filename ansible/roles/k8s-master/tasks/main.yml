@@ -1,0 +1,83 @@
+---
+- name: Setup firewall ports
+  firewalld:
+    zone: trusted
+    port: "{{ item }}"
+    state: enabled
+    permanent: true
+  with_items:
+    - 8080/tcp
+  notify:
+    - reload firewall
+
+- name: Setup firewall sources
+  firewalld:
+    zone: trusted
+    source: "{{ item }}"
+    state: enabled
+    permanent: true
+  with_items:
+    - '{{ nodes_ipv4 }}'
+    - '{{ nodes_ipv6 }}'
+  notify:
+    - reload firewall
+
+- name: Install Kubernets Master
+  yum:
+    name: kubernetes
+    state: present
+
+- name: Pull Kubernetes images
+  docker_image:
+    name: "{{ item }}"
+  with_items:
+    - "{{ k8s_master_pod_infra_image }}"
+    - "{{ k8s_master_api_server_image }}"
+    - "{{ k8s_master_controller_mgr_image }}"
+    - "{{ k8s_master_scheduler_image }}"
+
+- name: Enable Kubernetes services
+  service:
+    name: "{{ item }}"
+    enabled: yes
+  with_items:
+    - kubelet
+    - kube-proxy
+
+- name: Check kubernetes configs directory
+  file:
+    path: '{{ k8s_master_config }}/manifests'
+    state: directory
+    mode: 0755
+
+- name: Setup Kubelet service
+  template:
+    src: kubelet.j2
+    dest: '{{ k8s_master_config }}/kubelet'
+    mode: 0644
+  notify:
+    - restart kube-proxy/kubelet
+
+- name: Register API Server
+  template:
+    src: apiserver.pod.json.j2
+    dest: '{{ k8s_master_config }}/manifests/apiserver.pod.json'
+    mode: 0644
+  notify:
+    - restart kube-proxy/kubelet
+
+- name: Register Controller Manager
+  template:
+    src: controller-manager.pod.json.j2
+    dest: '{{ k8s_master_config }}/manifests/controller-manager.pod.json'
+    mode: 0644
+  notify:
+    - restart kube-proxy/kubelet
+
+- name: Register Scheduler
+  template:
+    src: scheduler.pod.json.j2
+    dest: '{{ k8s_master_config }}/manifests/scheduler.pod.json'
+    mode: 0644
+  notify:
+    - restart kube-proxy/kubelet

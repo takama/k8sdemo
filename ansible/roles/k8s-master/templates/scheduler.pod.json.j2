@@ -1,0 +1,39 @@
+{
+  "kind": "Pod",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "kube-scheduler"
+  },
+  "spec": {
+    "hostNetwork": true,
+    "containers": [
+      {
+        "name": "kube-scheduler",
+        "image": "{{ k8s_master_scheduler_image }}",
+        "volumeMounts": [
+          {
+            "name": "config",
+            "mountPath": "{{ k8s_master_config }}",
+            "readOnly": true
+          }
+        ],
+        "livenessProbe": {
+          "httpGet": {
+            "path": "/healthz",
+            "port": 10251
+          },
+          "initialDelaySeconds": 15,
+          "timeoutSeconds": 15
+        }
+      }
+    ],
+    "volumes": [
+      {
+        "name": "config",
+        "hostPath": {
+          "path": "{{ k8s_master_config }}"
+        }
+      }
+    ]
+  }
+}

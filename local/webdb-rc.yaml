@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: webdb
-          image: "webdb:0.1"
+          image: "takama/webdb:0.1"
           ports:
             - containerPort: 3306
 
