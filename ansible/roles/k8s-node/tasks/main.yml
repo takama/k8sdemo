@@ -11,6 +11,17 @@
   notify:
     - reload firewall
 
+- name: Setup firewall interfaces
+  firewalld:
+    zone: trusted
+    interface: "{{ item }}"
+    state: enabled
+    permanent: true
+  with_items:
+    - flannel.+
+  notify:
+    - reload firewall
+
 - name: Setup firewall sources
   firewalld:
     zone: trusted
