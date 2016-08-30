@@ -17,6 +17,7 @@
     state: enabled
     permanent: true
   with_items:
+    - docker+
     - flannel.+
   notify:
     - reload firewall
