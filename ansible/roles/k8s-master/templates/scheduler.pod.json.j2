@@ -9,7 +9,7 @@
     "containers": [
       {
         "name": "kube-scheduler",
-        "image": "{{ k8s_master_scheduler_image }}",
+        "image": "{{ k8s_master_scheduler_image }}:{{ k8s_master_scheduler_image_tag }}",
         "volumeMounts": [
           {
             "name": "config",

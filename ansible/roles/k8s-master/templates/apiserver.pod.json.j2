@@ -9,7 +9,7 @@
     "containers": [
       {
         "name": "kube-apiserver",
-        "image": "{{ k8s_master_api_server_image }}",
+        "image": "{{ k8s_master_api_server_image }}:{{ k8s_master_api_server_image_tag }}",
         "command": [
           "/usr/bin/kube-apiserver",
           "--v=0",
