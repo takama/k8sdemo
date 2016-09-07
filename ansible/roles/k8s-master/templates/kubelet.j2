@@ -14,7 +14,7 @@ KUBELET_HOSTNAME="--hostname-override={{ inventory_hostname }}"
 KUBELET_API_SERVER="--api_servers=http://{{ inventory_hostname }}:8080"
 
 # Add your own!
-KUBELET_ARGS="--register-node=true --config={{ k8s_master_config }}/manifests"
+KUBELET_ARGS="--register-node=true --config={{ k8s_master_config }}/manifests --cluster-dns={{ cluster_dns }} --cluster-domain={{ cluster_domain }}"
 
 # Infrastructure pod image
-KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image={{ k8s_master_pod_infra_image }}"
+KUBELET_POD_INFRA_CONTAINER="--pod-infra-container-image={{ k8s_master_pod_infra_image }}:{{ k8s_master_pod_infra_image_tag }}"

@@ -5,6 +5,8 @@ nodes_ipv4: []
 nodes_ipv6: []
 datastore_host: 0.0.0.0
 datastore_port: 2379
+cluster_dns: 10.254.0.10
+cluster_domain: k8s.cluster
 master_host: 0.0.0.0
 master_port: 8080
 k8s_node_config: '/etc/kubernetes'

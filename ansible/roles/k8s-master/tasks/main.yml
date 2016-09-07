@@ -41,12 +41,16 @@
 
 - name: Pull Kubernetes images
   docker_image:
-    name: "{{ item }}"
+    name: "{{ item.name }}"
+    tag: "{{ item.tag }}"
   with_items:
-    - "{{ k8s_master_pod_infra_image }}"
-    - "{{ k8s_master_api_server_image }}"
-    - "{{ k8s_master_controller_mgr_image }}"
-    - "{{ k8s_master_scheduler_image }}"
+    - { name: "{{ k8s_master_pod_infra_image }}", tag: "{{ k8s_master_pod_infra_image_tag }}" }
+    - { name: "{{ k8s_master_api_server_image }}", tag: "{{ k8s_master_api_server_image_tag }}" }
+    - { name: "{{ k8s_master_controller_mgr_image }}", tag: "{{ k8s_master_controller_mgr_image_tag }}" }
+    - { name: "{{ k8s_master_scheduler_image }}", tag: "{{ k8s_master_scheduler_image_tag }}" }
+    - { name: "{{ k8s_master_kubedns_image }}", tag: "{{ k8s_master_kubedns_image_tag }}" }
+    - { name: "{{ k8s_master_dnsmasq_image }}", tag: "{{ k8s_master_dnsmasq_image_tag }}" }
+    - { name: "{{ k8s_master_healthz_image }}", tag: "{{ k8s_master_healthz_image_tag }}" }
 
 - name: Enable Kubernetes services
   service:
@@ -56,11 +60,14 @@
     - kubelet
     - kube-proxy
 
-- name: Check kubernetes configs directory
+- name: Check kubernetes configs directories
   file:
-    path: '{{ k8s_master_config }}/manifests'
+    path: '{{ k8s_master_config }}/{{ item }}'
     state: directory
     mode: 0755
+  with_items:
+    - manifests
+    - addon
 
 - name: Setup Kubelet service
   template:
@@ -93,3 +100,12 @@
     mode: 0644
   notify:
     - restart kube-proxy/kubelet
+
+- name: Setup addon services
+  template:
+    src: "{{ item }}"
+    dest: '{{ k8s_master_config }}/addon/{{ item }}'
+    mode: 0644
+  with_items:
+    - kubedns-svc.yaml
+    - kubedns-rc.yaml
