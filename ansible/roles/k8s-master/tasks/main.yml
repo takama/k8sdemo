@@ -51,6 +51,7 @@
     - { name: "{{ k8s_master_kubedns_image }}", tag: "{{ k8s_master_kubedns_image_tag }}" }
     - { name: "{{ k8s_master_dnsmasq_image }}", tag: "{{ k8s_master_dnsmasq_image_tag }}" }
     - { name: "{{ k8s_master_healthz_image }}", tag: "{{ k8s_master_healthz_image_tag }}" }
+    - { name: "{{ k8s_master_dashboard_image }}", tag: "{{ k8s_master_dashboard_image_tag }}" }
 
 - name: Enable Kubernetes services
   service:
@@ -109,3 +110,5 @@
   with_items:
     - kubedns-svc.yaml
     - kubedns-rc.yaml
+    - dashboard.yaml
+    - kube-system-namespace.json
