@@ -14,4 +14,4 @@ KUBELET_HOSTNAME="--hostname-override={{ inventory_hostname }}"
 KUBELET_API_SERVER="--api_servers=http://{{ master_host }}:{{ master_port }}"
 
 # Add your own!
-KUBELET_ARGS="--register-node=true"
+KUBELET_ARGS="--register-node=true  --cluster-dns={{ cluster_dns }} --cluster-domain={{ cluster_domain }}"

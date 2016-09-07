@@ -9,7 +9,7 @@
     "containers": [
       {
         "name": "kube-controller-manager",
-        "image": "{{ k8s_master_controller_mgr_image }}",
+        "image": "{{ k8s_master_controller_mgr_image }}:{{ k8s_master_controller_mgr_image_tag }}",
         "volumeMounts": [
           {
             "name": "etcssl",
