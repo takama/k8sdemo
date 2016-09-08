@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: {{ demo_backend_name }}-controller
+spec:
+  replicas: {{ demo_backend_replicas }}
+  selector:
+    name: {{ demo_backend_name }}
+  template:
+    metadata:
+      name: {{ demo_backend_name }}
+      labels:
+        name: {{ demo_backend_name }}
+    spec:
+      containers:
+        - name: {{ demo_backend_name }}
+          image: '{{ demo_backend_image }}:{{ demo_backend_image_tag }}'
+          ports:
+            - containerPort: {{ demo_backend_port }}
+

@@ -1,0 +1,14 @@
+---
+demo_ipv4: []
+demo_path: '{{ ansible_env.HOME }}/services'
+demo_namespace: default
+demo_frontend_replicas: 2
+demo_frontend_name: webapp
+demo_frontend_port: 3000
+demo_frontend_image: 'takama/webapp'
+demo_frontend_image_tag: '0.1'
+demo_backend_replicas: 2
+demo_backend_name: webdb
+demo_backend_port: 3306
+demo_backend_image: 'takama/webdb'
+demo_backend_image_tag: '0.1'
