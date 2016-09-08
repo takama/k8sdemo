@@ -7,3 +7,7 @@ k8s-node-02.your-domain
 
 [datastore:children]
 master
+
+[demo:children]
+master
+

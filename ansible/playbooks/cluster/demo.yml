@@ -1,0 +1,12 @@
+---
+- hosts: demo
+  tasks:
+    - ping:
+
+- hosts: demo
+  pre_tasks:
+  - set_fact:
+      demo_ipv4: "{{ groups['master']|map('extract', hostvars, 'ansible_all_ipv4_addresses')|map(attribute='0')|list }}"
+  roles:
+    - role: demo
+      tags: demo
