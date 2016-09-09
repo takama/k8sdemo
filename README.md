@@ -5,7 +5,7 @@ Automated scripts to demonstrate the features of the Kubernetes.
 
 ### Version
 
-0.2.2
+0.2.3
 
 ### Documentation
 
