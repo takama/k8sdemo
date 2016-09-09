@@ -7,6 +7,11 @@ Automated scripts to demonstrate the features of the Kubernetes.
 
 0.2.0
 
+### Documentation
+
+[English](https://github.com/takama/k8sdemo/blob/master/kubernetes_demo_en.pdf)
+[Russian](https://github.com/takama/k8sdemo/blob/master/kubernetes_demo_ru.pdf)
+
 ## Author
 
 [Igor Dolzhikov](https://github.com/takama)
