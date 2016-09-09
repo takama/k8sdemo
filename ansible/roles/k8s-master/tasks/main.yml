@@ -68,7 +68,7 @@
     mode: 0755
   with_items:
     - manifests
-    - addon
+    - addons
 
 - name: Setup Kubelet service
   template:
@@ -105,7 +105,7 @@
 - name: Setup addon services
   template:
     src: "{{ item }}"
-    dest: '{{ k8s_master_config }}/addon/{{ item }}'
+    dest: '{{ k8s_master_config }}/addons/{{ item }}'
     mode: 0644
   with_items:
     - kubedns-svc.yaml
