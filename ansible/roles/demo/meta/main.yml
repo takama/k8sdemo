@@ -3,7 +3,7 @@ galaxy_info:
   description: Kubernetes Demo manifests
   company: Openprovider
 
-  license: license (MIT)
+  license: license (BSD)
 
   min_ansible_version: 2.1
 
